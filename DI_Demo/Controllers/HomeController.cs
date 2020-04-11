@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DI_Demo.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DI_Demo.Controllers
@@ -10,7 +11,14 @@ namespace DI_Demo.Controllers
     [Route("[controller]")]
     public class HomeController : ControllerBase
     {
-        [HttpGet("Random")]
-        public int Random() => new Random().Next();
+        private readonly ITestService _testService;
+
+        public HomeController(ITestService testService)
+        {
+            _testService = testService;
+        }
+
+        [HttpGet("Add/{a}/{b}")]
+        public int AddTwoNumber(int a, int b) => _testService.Add(a, b);
     }
 }
