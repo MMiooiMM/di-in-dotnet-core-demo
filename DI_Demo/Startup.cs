@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DI_Demo.Models;
 using DI_Demo.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,6 +30,8 @@ namespace DI_Demo
             services.AddControllers();
 
             services.AddScoped<ITestService, TestService>();
+
+            services.Configure<TestConfig>(Configuration.GetSection("TestConfig"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
