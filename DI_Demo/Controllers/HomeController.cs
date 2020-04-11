@@ -1,7 +1,6 @@
-﻿using DI_Demo.Models;
+﻿using DI_Demo.Helpers;
 using DI_Demo.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 namespace DI_Demo.Controllers
 {
@@ -10,18 +9,18 @@ namespace DI_Demo.Controllers
     public class HomeController : ControllerBase
     {
         private readonly ITestService _testService;
-        private readonly TestConfig _testConfig;
+        private readonly TestHelper _testHelper;
 
-        public HomeController(ITestService testService, IOptions<TestConfig> options)
+        public HomeController(ITestService testService, TestHelper testHelper)
         {
             _testService = testService;
-            _testConfig = options.Value;
+            _testHelper = testHelper;
         }
 
         [HttpGet("add/{a}/{b}")]
         public int AddTwoNumber(int a, int b) => _testService.Add(a, b);
 
         [HttpGet("testconfig")]
-        public string GetTestConfigValue() => _testConfig.Value;
+        public string GetTestConfigValue() => _testHelper.DoSomthingAndGetValue();
     }
 }
